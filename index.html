@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            padding: 20px; /* Adds breathing room around the edges */
+            padding: 20px; 
             box-sizing: border-box;
             display: flex;
             justify-content: center;
@@ -22,20 +22,38 @@
             text-align: center;
             z-index: 10;
             width: 100%;
-            max-width: 400px; /* Keeps everything nicely grouped */
+            max-width: 600px; /* Widened to let text breathe on laptops */
         }
 
         h1 {
             color: #ff4d4d;
             font-size: 2.5rem;
-            margin-bottom: 30px;
-            line-height: 1.2; /* Makes stacked text look cleaner */
+            margin-bottom: 15px; /* Reduced so stacked titles don't take up too much room */
+            line-height: 1.2; 
+        }
+
+        /* Styles for your sweet message */
+        .message-text {
+            color: #ff4d4d;
+            font-size: 1.4rem;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        /* Style for your signature */
+        .signature {
+            color: #ff1a1a;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: bold;
+            margin: 15px 0 5px 0;
         }
 
         .buttons-container {
             position: relative;
             display: inline-block;
             width: 100%;
+            margin-top: 15px;
         }
 
         button {
@@ -48,7 +66,6 @@
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.1s;
-            /* Prevents blue highlight when tapping on mobile */
             -webkit-tap-highlight-color: transparent; 
         }
 
@@ -69,24 +86,30 @@
             transition: left 0.2s ease, top 0.2s ease; 
         }
 
-        /* Mobile-Friendly Success Screen Styles */
         .success-gif {
             border-radius: 20px;
-            margin-top: 20px;
+            margin-top: 15px;
             width: 100%;
-            max-height: 50vh; /* Ensures the GIF never takes up more than half the screen height */
-            object-fit: cover; /* Keeps the GIF from squishing weirdly */
+            max-width: 400px; /* Keeps GIF from getting too huge on desktop */
+            max-height: 45vh; 
+            object-fit: cover; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* MOBILE ADJUSTMENTS */
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.8rem; /* Shrinks the title for phones */
-                margin-bottom: 20px;
+                font-size: 1.8rem; 
+                margin-bottom: 10px;
+            }
+            .message-text {
+                font-size: 1.1rem; /* Shrinks paragraph text for phones */
+            }
+            .signature {
+                font-size: 1.3rem; /* Shrinks signature for phones */
             }
             button {
-                font-size: 1.2rem; /* Shrinks buttons slightly */
+                font-size: 1.2rem; 
                 padding: 12px 30px;
             }
         }
@@ -96,7 +119,7 @@
 
     <div class="container" id="main-container">
         <h1>My sweet Ezu!</h1>
-		<h1>Will you be my Valentine? 🥺❤️</h1>
+        <h1>Will you be my Valentine? 🥺❤️</h1>
         <div class="buttons-container">
             <button id="yes-btn">Yes!</button>
             <button id="no-btn">No</button>
@@ -111,7 +134,6 @@
         const moveButton = () => {
             noBtn.style.position = 'fixed';
             
-            // Added slight padding to the math so the button doesn't jump perfectly flush against the screen edge
             const padding = 20; 
             const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth - padding));
             const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight - padding));
@@ -127,11 +149,12 @@
         });
 
         yesBtn.addEventListener('click', () => {
+            // Replaced the multiple h1 tags with properly styled p tags!
             container.innerHTML = `
                 <h1>Yay! I knew you'd say yes! 💖🥰</h1>
-				<h1>Please be mine forever no matter what, my lovely Ezu!</h1>
-				<h1>Yours and yours only -</h1>
-				<h1>Kasid</h1>
+                <p class="message-text">Please be mine forever no matter what, my lovely Ezu!</p>
+                <p class="message-text">Yours and yours only -</p>
+                <p class="signature">Kasid</p>
                 <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExajhqZzQ5aW10YW10emNnaHZ1aTh1bHVtc2ltaXZsaHZ4eXp5eG9ybiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0ThflsHCqDrG/giphy.gif" alt="Happy Bears Hugging" class="success-gif">
             `;
         });
