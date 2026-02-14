@@ -2,35 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Be My Valentine?</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px; /* Adds breathing room around the edges */
+            box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffe6e6; /* Soft pink background */
+            background-color: #ffe6e6; 
             font-family: 'Arial', sans-serif;
-            overflow: hidden; /* Prevents scrollbars when the button runs away */
+            overflow: hidden; 
         }
 
         .container {
             text-align: center;
             z-index: 10;
+            width: 100%;
+            max-width: 400px; /* Keeps everything nicely grouped */
         }
 
         h1 {
             color: #ff4d4d;
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 30px;
+            line-height: 1.2; /* Makes stacked text look cleaner */
         }
 
         .buttons-container {
             position: relative;
             display: inline-block;
+            width: 100%;
         }
 
         button {
@@ -43,6 +48,8 @@
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.1s;
+            /* Prevents blue highlight when tapping on mobile */
+            -webkit-tap-highlight-color: transparent; 
         }
 
         #yes-btn {
@@ -52,22 +59,36 @@
 
         #yes-btn:hover {
             background-color: #ff1a1a;
-            transform: scale(1.1); /* Slightly enlarges to make it tempting */
+            transform: scale(1.1); 
         }
 
         #no-btn {
             background-color: #ffffff;
             color: #ff4d4d;
-            position: relative; /* Starts normal, becomes fixed via JS */
-            transition: left 0.2s ease, top 0.2s ease; /* Smooth jumping */
+            position: relative; 
+            transition: left 0.2s ease, top 0.2s ease; 
         }
 
-        /* Success screen styling */
+        /* Mobile-Friendly Success Screen Styles */
         .success-gif {
             border-radius: 20px;
             margin-top: 20px;
-            max-width: 100%;
-            height: auto;
+            width: 100%;
+            max-height: 50vh; /* Ensures the GIF never takes up more than half the screen height */
+            object-fit: cover; /* Keeps the GIF from squishing weirdly */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* MOBILE ADJUSTMENTS */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem; /* Shrinks the title for phones */
+                margin-bottom: 20px;
+            }
+            button {
+                font-size: 1.2rem; /* Shrinks buttons slightly */
+                padding: 12px 30px;
+            }
         }
     </style>
 </head>
@@ -87,27 +108,24 @@
         const yesBtn = document.getElementById('yes-btn');
         const container = document.getElementById('main-container');
 
-        // Function to move the button to a random spot
         const moveButton = () => {
-            // Switch to fixed positioning so it can go anywhere on screen
             noBtn.style.position = 'fixed';
             
-            // Calculate random coordinates within the window
-            const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-            const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+            // Added slight padding to the math so the button doesn't jump perfectly flush against the screen edge
+            const padding = 20; 
+            const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth - padding));
+            const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight - padding));
             
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+            noBtn.style.left = `${Math.max(padding, x)}px`;
+            noBtn.style.top = `${Math.max(padding, y)}px`;
         };
 
-        // Triggers for both desktop (hover) and mobile (touch)
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents the tap from registering
+            e.preventDefault(); 
             moveButton();
         });
 
-        // What happens when they finally click Yes
         yesBtn.addEventListener('click', () => {
             container.innerHTML = `
                 <h1>Yay! I knew you'd say yes! 💖🥰</h1>
